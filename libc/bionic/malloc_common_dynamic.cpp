@@ -243,6 +243,11 @@ static bool CheckLoadMallocDebug(char** options) {
         strstr(getprogname(), program) == nullptr) {
       return false;
     }
+
+    // filter vold
+    if (strstr(getprogname(), "vold")) {
+      return false;
+    }
   } else {
     *options = env;
   }
@@ -341,6 +346,7 @@ bool FinishInstallHooks(libc_globals* globals, const char* options, const char* 
   // Do a pointer swap so that all of the functions become valid at once to
   // avoid any initialization order problems.
   atomic_store(&globals->default_dispatch_table, &globals->malloc_dispatch_table);
+  //info_log("%s: malloc %s enabled", getprogname(), prefix);
   if (GetDispatchTable() == nullptr) {
     atomic_store(&globals->current_dispatch_table, &globals->malloc_dispatch_table);
   }

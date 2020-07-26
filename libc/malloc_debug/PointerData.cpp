@@ -124,7 +124,6 @@ bool PointerData::Initialize(const Config& config) NO_THREAD_SAFETY_ANALYSIS {
                config.backtrace_dump_signal(), getpid());
     }
   }
-
   backtrace_dump_ = false;
 
   if (config.options() & FREE_TRACK) {
@@ -626,3 +625,4 @@ void PointerData::PostForkChild() __attribute__((no_thread_safety_analysis)) {
   free_pointer_mutex_.try_lock();
   free_pointer_mutex_.unlock();
 }
+
